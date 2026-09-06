@@ -20,7 +20,7 @@ export const Route = createFileRoute("/resources")({
       },
     ],
   }),
-  component: Resources;
+  component: Resources,
 });
 
 const KINDS = ["food", "water", "medicine", "shelter"] as const;
