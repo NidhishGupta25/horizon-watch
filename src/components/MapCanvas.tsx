@@ -62,14 +62,14 @@ function lerpRoute(route: [number, number][], t: number): [number, number] {
   const pos = Math.min(Math.max(t, 0), 0.9999) * segs;
   const i = Math.floor(pos);
   const f = pos - i;
-  const a = route[i];
-  const b = route[i + 1] ?? route[i];
+  const a = route[i] ?? route[0]!;
+  const b = route[i + 1] ?? a;
   return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
 }
 
 /** Vehicle interpolates along the real polyline using the allocation ETA. */
 function Vehicle({ route, etaMin, label }: { route: [number, number][]; etaMin: number; label: string }) {
-  const [pos, setPos] = useState<[number, number]>(route[0]);
+  const [pos, setPos] = useState<[number, number]>(route[0]!);
   const raf = useRef<number>(0);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ function Vehicle({ route, etaMin, label }: { route: [number, number][]; etaMin: 
   );
 }
 
-function FlyTo({ zone }: { zone?: Zone }) {
+function FlyTo({ zone }: { zone?: Zone | undefined }) {
   const map = useMap();
   useEffect(() => {
     if (zone) map.flyTo(zone.coords, Math.max(map.getZoom(), 7), { duration: 0.9 });
