@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AllocationsRouteImport } from './routes/allocations'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SimulationRouteImport } from './routes/simulation'
@@ -17,6 +18,11 @@ import { Route as SimulationRouteImport } from './routes/simulation'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AllocationsRoute = AllocationsRouteImport.update({
+  id: '/allocations',
+  path: '/allocations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MonitoringRoute = MonitoringRouteImport.update({
@@ -37,12 +43,14 @@ const SimulationRoute = SimulationRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/allocations': typeof AllocationsRoute
   '/monitoring': typeof MonitoringRoute
   '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/allocations': typeof AllocationsRoute
   '/monitoring': typeof MonitoringRoute
   '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/allocations': typeof AllocationsRoute
   '/monitoring': typeof MonitoringRoute
   '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/monitoring' | '/resources' | '/simulation'
+  fullPaths: '/' | '/allocations' | '/monitoring' | '/resources' | '/simulation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/monitoring' | '/resources' | '/simulation'
-  id: '__root__' | '/' | '/monitoring' | '/resources' | '/simulation'
+  to: '/' | '/allocations' | '/monitoring' | '/resources' | '/simulation'
+  id:
+    | '__root__'
+    | '/'
+    | '/allocations'
+    | '/monitoring'
+    | '/resources'
+    | '/simulation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AllocationsRoute: typeof AllocationsRoute
   MonitoringRoute: typeof MonitoringRoute
   ResourcesRoute: typeof ResourcesRoute
   SimulationRoute: typeof SimulationRoute
@@ -76,6 +92,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/allocations': {
+      id: '/allocations'
+      path: '/allocations'
+      fullPath: '/allocations'
+      preLoaderRoute: typeof AllocationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/monitoring': {
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AllocationsRoute: AllocationsRoute,
   MonitoringRoute: MonitoringRoute,
   ResourcesRoute: ResourcesRoute,
   SimulationRoute: SimulationRoute,
