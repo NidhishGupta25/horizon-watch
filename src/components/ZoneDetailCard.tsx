@@ -78,7 +78,7 @@ export function ZoneDetailCard({ zone, onClose }: { zone: Zone; onClose: () => v
       key={zone.id}
       initial={reduced ? false : { opacity: 0, x: 16 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={reduced ? undefined : { opacity: 0, x: 16 }}
+      exit={reduced ? { opacity: 1 } : { opacity: 0, x: 16 }}
       transition={{ duration: 0.22 }}
       className="absolute right-4 top-4 z-[600] max-h-[calc(100%-2rem)] w-[360px] overflow-y-auto panel"
     >
@@ -162,7 +162,7 @@ export function ZoneDetailCard({ zone, onClose }: { zone: Zone; onClose: () => v
             <motion.ul
               initial={reduced ? false : { height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
-              exit={reduced ? undefined : { height: 0, opacity: 0 }}
+              exit={reduced ? { opacity: 1 } : { height: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="overflow-hidden border-t border-line"
             >
