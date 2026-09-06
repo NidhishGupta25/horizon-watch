@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SimulationRouteImport } from './routes/simulation'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const MonitoringRoute = MonitoringRouteImport.update({
   path: '/monitoring',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SimulationRoute = SimulationRouteImport.update({
   id: '/simulation',
   path: '/simulation',
@@ -32,30 +38,34 @@ const SimulationRoute = SimulationRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/monitoring': typeof MonitoringRoute
+  '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/monitoring': typeof MonitoringRoute
+  '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/monitoring': typeof MonitoringRoute
+  '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/monitoring' | '/simulation'
+  fullPaths: '/' | '/monitoring' | '/resources' | '/simulation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/monitoring' | '/simulation'
-  id: '__root__' | '/' | '/monitoring' | '/simulation'
+  to: '/' | '/monitoring' | '/resources' | '/simulation'
+  id: '__root__' | '/' | '/monitoring' | '/resources' | '/simulation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MonitoringRoute: typeof MonitoringRoute
+  ResourcesRoute: typeof ResourcesRoute
   SimulationRoute: typeof SimulationRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MonitoringRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/simulation': {
       id: '/simulation'
       path: '/simulation'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MonitoringRoute: MonitoringRoute,
+  ResourcesRoute: ResourcesRoute,
   SimulationRoute: SimulationRoute,
 }
 export const routeTree = rootRouteImport
