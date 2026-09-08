@@ -14,7 +14,188 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ingestion_runs: {
+        Row: {
+          error: string | null
+          id: string
+          items_inserted: number
+          items_seen: number
+          ran_at: string
+          status: string
+        }
+        Insert: {
+          error?: string | null
+          id?: string
+          items_inserted?: number
+          items_seen?: number
+          ran_at?: string
+          status: string
+        }
+        Update: {
+          error?: string | null
+          id?: string
+          items_inserted?: number
+          items_seen?: number
+          ran_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      live_disasters: {
+        Row: {
+          created_at: string
+          dedupe_hash: string
+          description: string | null
+          dispatch_distance_km: number | null
+          dispatch_warehouse_id: string | null
+          district: string | null
+          geocode_source: string
+          hazard_type: string
+          id: string
+          lat: number | null
+          lng: number | null
+          pub_date: string | null
+          severity: string
+          state: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          dedupe_hash: string
+          description?: string | null
+          dispatch_distance_km?: number | null
+          dispatch_warehouse_id?: string | null
+          district?: string | null
+          geocode_source?: string
+          hazard_type: string
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          pub_date?: string | null
+          severity?: string
+          state?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          dedupe_hash?: string
+          description?: string | null
+          dispatch_distance_km?: number | null
+          dispatch_warehouse_id?: string | null
+          district?: string | null
+          geocode_source?: string
+          hazard_type?: string
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          pub_date?: string | null
+          severity?: string
+          state?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "live_disasters_dispatch_warehouse_id_fkey"
+            columns: ["dispatch_warehouse_id"]
+            isOneToOne: false
+            referencedRelation: "warehouses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supply_dispatches: {
+        Row: {
+          created_at: string
+          disaster_id: string
+          id: string
+          item: string
+          quantity: number
+          warehouse_id: string
+        }
+        Insert: {
+          created_at?: string
+          disaster_id: string
+          id?: string
+          item: string
+          quantity: number
+          warehouse_id: string
+        }
+        Update: {
+          created_at?: string
+          disaster_id?: string
+          id?: string
+          item?: string
+          quantity?: number
+          warehouse_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supply_dispatches_disaster_id_fkey"
+            columns: ["disaster_id"]
+            isOneToOne: false
+            referencedRelation: "live_disasters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supply_dispatches_warehouse_id_fkey"
+            columns: ["warehouse_id"]
+            isOneToOne: false
+            referencedRelation: "warehouses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      warehouses: {
+        Row: {
+          boats: number
+          capacity: number
+          food: number
+          id: string
+          last_updated: string
+          lat: number
+          lng: number
+          medicine: number
+          name: string
+          purification_tablets: number
+          shelter: number
+          status: string
+          vehicles: number
+          water: number
+        }
+        Insert: {
+          boats?: number
+          capacity?: number
+          food?: number
+          id: string
+          last_updated?: string
+          lat: number
+          lng: number
+          medicine?: number
+          name: string
+          purification_tablets?: number
+          shelter?: number
+          status?: string
+          vehicles?: number
+          water?: number
+        }
+        Update: {
+          boats?: number
+          capacity?: number
+          food?: number
+          id?: string
+          last_updated?: string
+          lat?: number
+          lng?: number
+          medicine?: number
+          name?: string
+          purification_tablets?: number
+          shelter?: number
+          status?: string
+          vehicles?: number
+          water?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
