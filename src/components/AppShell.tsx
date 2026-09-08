@@ -49,9 +49,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           <span className="text-[13px]">
             Welcome back, A. Rane — Operator
           </span>
-          <Link to="/login" className="border border-line px-2 py-1 text-[12px] hover:bg-accent">
+          <Link to="/" className="border border-line px-2 py-1 text-[12px] hover:bg-accent">
             Sign out
           </Link>
+
         </div>
       </header>
 
