@@ -14,6 +14,8 @@ import { Route as AllocationsRouteImport } from './routes/allocations'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SimulationRouteImport } from './routes/simulation'
+import { Route as ApiDisastersLiveRouteImport } from './routes/api/disasters/live'
+import { Route as ApiPublicHooksIngestNdmaRouteImport } from './routes/api/public/hooks/ingest-ndma'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +42,17 @@ const SimulationRoute = SimulationRouteImport.update({
   path: '/simulation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDisastersLiveRoute = ApiDisastersLiveRouteImport.update({
+  id: '/api/disasters/live',
+  path: '/api/disasters/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHooksIngestNdmaRoute =
+  ApiPublicHooksIngestNdmaRouteImport.update({
+    id: '/api/public/hooks/ingest-ndma',
+    path: '/api/public/hooks/ingest-ndma',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +60,8 @@ export interface FileRoutesByFullPath {
   '/monitoring': typeof MonitoringRoute
   '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
+  '/api/disasters/live': typeof ApiDisastersLiveRoute
+  '/api/public/hooks/ingest-ndma': typeof ApiPublicHooksIngestNdmaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +69,8 @@ export interface FileRoutesByTo {
   '/monitoring': typeof MonitoringRoute
   '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
+  '/api/disasters/live': typeof ApiDisastersLiveRoute
+  '/api/public/hooks/ingest-ndma': typeof ApiPublicHooksIngestNdmaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +79,28 @@ export interface FileRoutesById {
   '/monitoring': typeof MonitoringRoute
   '/resources': typeof ResourcesRoute
   '/simulation': typeof SimulationRoute
+  '/api/disasters/live': typeof ApiDisastersLiveRoute
+  '/api/public/hooks/ingest-ndma': typeof ApiPublicHooksIngestNdmaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/allocations' | '/monitoring' | '/resources' | '/simulation'
+  fullPaths:
+    | '/'
+    | '/allocations'
+    | '/monitoring'
+    | '/resources'
+    | '/simulation'
+    | '/api/disasters/live'
+    | '/api/public/hooks/ingest-ndma'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/allocations' | '/monitoring' | '/resources' | '/simulation'
+  to:
+    | '/'
+    | '/allocations'
+    | '/monitoring'
+    | '/resources'
+    | '/simulation'
+    | '/api/disasters/live'
+    | '/api/public/hooks/ingest-ndma'
   id:
     | '__root__'
     | '/'
@@ -75,6 +108,8 @@ export interface FileRouteTypes {
     | '/monitoring'
     | '/resources'
     | '/simulation'
+    | '/api/disasters/live'
+    | '/api/public/hooks/ingest-ndma'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +118,8 @@ export interface RootRouteChildren {
   MonitoringRoute: typeof MonitoringRoute
   ResourcesRoute: typeof ResourcesRoute
   SimulationRoute: typeof SimulationRoute
+  ApiDisastersLiveRoute: typeof ApiDisastersLiveRoute
+  ApiPublicHooksIngestNdmaRoute: typeof ApiPublicHooksIngestNdmaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +159,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SimulationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/disasters/live': {
+      id: '/api/disasters/live'
+      path: '/api/disasters/live'
+      fullPath: '/api/disasters/live'
+      preLoaderRoute: typeof ApiDisastersLiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/ingest-ndma': {
+      id: '/api/public/hooks/ingest-ndma'
+      path: '/api/public/hooks/ingest-ndma'
+      fullPath: '/api/public/hooks/ingest-ndma'
+      preLoaderRoute: typeof ApiPublicHooksIngestNdmaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,6 +182,8 @@ const rootRouteChildren: RootRouteChildren = {
   MonitoringRoute: MonitoringRoute,
   ResourcesRoute: ResourcesRoute,
   SimulationRoute: SimulationRoute,
+  ApiDisastersLiveRoute: ApiDisastersLiveRoute,
+  ApiPublicHooksIngestNdmaRoute: ApiPublicHooksIngestNdmaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
