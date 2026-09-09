@@ -6,6 +6,7 @@ import { KpiRail, type Kpi } from "@/components/KpiRail";
 import { MapPanel } from "@/components/MapPanel";
 import { PipelineStepper } from "@/components/PipelineStepper";
 import { ZoneDetailCard } from "@/components/ZoneDetailCard";
+import { useLiveFeed } from "@/hooks/useLiveFeed";
 import { PIPELINE_STAGES, fmt, zones } from "@/data/mock";
 
 export const Route = createFileRoute("/")({
