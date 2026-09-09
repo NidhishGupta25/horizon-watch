@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { DISASTER_LABEL, fmt, type Zone } from "@/data/mock";
+import { SourceBadge } from "@/components/SourceBadge";
 
 const SEV_ORDER = ["Low", "Moderate", "High", "Extreme"] as const;
 
@@ -85,6 +86,9 @@ export function ZoneDetailCard({ zone, onClose }: { zone: Zone; onClose: () => v
       <div className="flex items-start justify-between gap-2 border-b border-line px-4 py-3">
         <div>
           <h3 className="text-[15px] font-bold leading-tight">{zone.name}</h3>
+          <div className="mt-1">
+            <SourceBadge zone={zone} />
+          </div>
           <div className="data text-[11px] text-muted-foreground">
             {zone.id} · {zone.district}
           </div>
