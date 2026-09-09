@@ -6,6 +6,7 @@ import { KpiRail, type Kpi } from "@/components/KpiRail";
 import { MapPanel } from "@/components/MapPanel";
 import { PipelineStepper } from "@/components/PipelineStepper";
 import { ZoneDetailCard } from "@/components/ZoneDetailCard";
+import { useLiveFeed } from "@/hooks/useLiveFeed";
 import { PIPELINE_STAGES, fmt, zones } from "@/data/mock";
 
 export const Route = createFileRoute("/")({
@@ -29,10 +30,18 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
-  const [selected, setSelected] = useState<string | null>("ZN-114");
+  const { liveZones, degraded, isLoading } = useLiveFeed();
+  const [selected, setSelected] = useState<string | null>(null);
   const [stage, setStage] = useState(PIPELINE_STAGES.length - 1);
   const [running, setRunning] = useState(false);
   const [runId, setRunId] = useState(0);
+
+  const allZones = [...liveZones, ...zones];
+  const active = allZones.filter((z) => z.mode === "LIVE");
+
+  useEffect(() => {
+    if (selected === null && active.length > 0) setSelected(active[0]!.id);
+  }, [selected, active]);
 
   useEffect(() => {
     if (!running) return;
@@ -50,9 +59,16 @@ function Dashboard() {
     setRunning(true);
   };
 
-  const active = zones.filter((z) => z.mode === "LIVE");
+  const liveCount = liveZones.length;
   const kpis: Kpi[] = [
-    { label: "Active disasters", value: active.length, note: "4 states · 2 disaster types escalating", tone: "primary" },
+    {
+      label: "Active disasters",
+      value: active.length,
+      note: degraded
+        ? "Live feed degraded — showing last known events"
+        : `${liveCount} from the live national alert feed`,
+      tone: "primary",
+    },
     {
       label: "High-risk zones",
       value: active.filter((z) => z.score >= 0.6).length,
@@ -68,8 +84,9 @@ function Dashboard() {
     { label: "Resource shortages", value: 3, note: "Shelter kits, medicine, 8 t vehicles", tone: "moderate" },
   ];
 
-  const zone = zones.find((z) => z.id === selected);
+  const zone = allZones.find((z) => z.id === selected);
   const ranked = [...active].sort((a, b) => b.ddpi - a.ddpi);
+
 
   return (
     <AppShell>
