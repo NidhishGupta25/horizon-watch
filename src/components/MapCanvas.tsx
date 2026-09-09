@@ -2,6 +2,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Polygon, Polyline, Marker, useMap, Tooltip } from "react-leaflet";
+import { SourceBadge } from "@/components/SourceBadge";
 import {
   allocations as allAllocations,
   hazardZones as allHazard,
@@ -214,6 +215,9 @@ export default function MapCanvas({
               <Tooltip direction="top" offset={[0, -10]}>
                 <div className="text-[11px]">
                   <div className="font-semibold">{z.name}</div>
+                  <div className="mt-0.5">
+                    <SourceBadge zone={z} />
+                  </div>
                   <div className="data">
                     {z.severity} · {fmt(z.affected)} affected
                   </div>
