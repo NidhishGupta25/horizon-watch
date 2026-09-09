@@ -209,6 +209,16 @@ function tidy(value: string | undefined): string | null {
   return out.length >= 3 ? out : null;
 }
 
+/** Keeps only the trailing place name from a noisy phrase ("River X at Y in Saran" -> "Saran"). */
+function lastPlaceName(value: string | null | undefined): string | null {
+  const base = tidy(value ?? undefined);
+  if (!base) return null;
+  const parts = base.split(/\s+(?:at|in|of|near|over|the)\s+/i);
+  const tail = parts[parts.length - 1]?.trim() ?? base;
+  return tail.length >= 3 ? tail : base;
+}
+
+
 function resolveState(candidate: string | null): string | null {
   if (!candidate) return null;
   return STATE_NAMES.find((s) => s.toLowerCase() === candidate.toLowerCase()) ?? null;
