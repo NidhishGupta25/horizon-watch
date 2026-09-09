@@ -179,8 +179,8 @@ export function extractLocation(title: string): { district: string | null; state
   for (const re of patterns) {
     const m = cleaned.match(re);
     if (m) {
-      const district = tidy(m[1]);
-      const state = resolveState(tidy(m[2])) ?? tidy(m[2]);
+      const district = lastPlaceName(m[1]);
+      const state = resolveState(tidy(m[2]));
       if (district && state) return { district, state };
     }
   }
@@ -189,9 +189,12 @@ export function extractLocation(title: string): { district: string | null; state
   const state = STATE_NAMES.find((s) => new RegExp(`\\b${s}\\b`, "i").test(cleaned)) ?? null;
   if (state) {
     const before = cleaned.split(new RegExp(`\\b${state}\\b`, "i"))[0] ?? "";
+    const districtMatch = before.match(/([A-Z][A-Za-z.'-]+(?: [A-Z][A-Za-z.'-]+)?)\s+district\b/);
+    if (districtMatch) return { district: tidy(districtMatch[1]), state };
     const tailMatch = before.match(/([A-Za-z][A-Za-z .'-]{2,30})[,\s]+$/);
-    return { district: tailMatch ? tidy(tailMatch[1]) : null, state };
+    return { district: lastPlaceName(tailMatch?.[1] ?? null), state };
   }
+
 
   return { district: null, state: null };
 }
@@ -205,6 +208,16 @@ function tidy(value: string | undefined): string | null {
     .trim();
   return out.length >= 3 ? out : null;
 }
+
+/** Keeps only the trailing place name from a noisy phrase ("River X at Y in Saran" -> "Saran"). */
+function lastPlaceName(value: string | null | undefined): string | null {
+  const base = tidy(value ?? undefined);
+  if (!base) return null;
+  const parts = base.split(/\s+(?:at|in|of|near|over|the)\s+/i);
+  const tail = parts[parts.length - 1]?.trim() ?? base;
+  return tail.length >= 3 ? tail : base;
+}
+
 
 function resolveState(candidate: string | null): string | null {
   if (!candidate) return null;

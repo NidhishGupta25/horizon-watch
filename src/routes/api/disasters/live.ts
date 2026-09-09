@@ -46,14 +46,31 @@ export const Route = createFileRoute("/api/disasters/live")({
 
           if (disasters.error) throw disasters.error;
 
+          let rows = disasters.data ?? [];
+          let liveError: string | undefined;
+
+          // Nothing stored yet — read the national feed directly so the
+          // dashboard still shows current hazards.
+          if (rows.length === 0) {
+            try {
+              const { readFeedDirect } = await import("@/lib/ndma-direct.server");
+              rows = (await readFeedDirect((warehouses.data ?? []) as never)) as never;
+            } catch (feedError) {
+              console.error("direct feed read failed", feedError);
+              liveError = "Alert feed unreachable";
+            }
+          }
+
           return Response.json(
             {
-              disasters: disasters.data ?? [],
+              disasters: rows,
               warehouses: warehouses.data ?? [],
               lastRun: runs.data?.[0] ?? null,
+              ...(liveError ? { error: liveError } : {}),
             },
             { headers: { "cache-control": "no-store" } },
           );
+
         } catch (error) {
           console.error("live disasters read failed", error);
           return Response.json(
