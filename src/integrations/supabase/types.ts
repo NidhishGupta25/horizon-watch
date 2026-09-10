@@ -14,6 +14,105 @@ export type Database = {
   }
   public: {
     Tables: {
+      data_source_log: {
+        Row: {
+          fetched_at: string
+          hazard_type: string
+          id: string
+          message: string | null
+          source_used: string
+          status: string
+          zone_id: string | null
+        }
+        Insert: {
+          fetched_at?: string
+          hazard_type: string
+          id?: string
+          message?: string | null
+          source_used: string
+          status: string
+          zone_id?: string | null
+        }
+        Update: {
+          fetched_at?: string
+          hazard_type?: string
+          id?: string
+          message?: string | null
+          source_used?: string
+          status?: string
+          zone_id?: string | null
+        }
+        Relationships: []
+      }
+      hazard_zones: {
+        Row: {
+          created_at: string
+          disaster_type: string
+          flood_prone: boolean
+          historical_risk_score: number
+          id: string
+          live_landslide_risk: number | null
+          live_min_pressure_hpa: number | null
+          live_peak_wind_kmh: number | null
+          live_rainfall_mm: number | null
+          live_river_discharge_m3s: number | null
+          live_source: string | null
+          live_updated_at: string | null
+          name: string
+          on_river_channel: boolean
+          river_name: string | null
+          sample_lat: number
+          sample_lng: number
+          slope_index: number
+          soil_saturation: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          disaster_type: string
+          flood_prone?: boolean
+          historical_risk_score?: number
+          id: string
+          live_landslide_risk?: number | null
+          live_min_pressure_hpa?: number | null
+          live_peak_wind_kmh?: number | null
+          live_rainfall_mm?: number | null
+          live_river_discharge_m3s?: number | null
+          live_source?: string | null
+          live_updated_at?: string | null
+          name: string
+          on_river_channel?: boolean
+          river_name?: string | null
+          sample_lat: number
+          sample_lng: number
+          slope_index?: number
+          soil_saturation?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          disaster_type?: string
+          flood_prone?: boolean
+          historical_risk_score?: number
+          id?: string
+          live_landslide_risk?: number | null
+          live_min_pressure_hpa?: number | null
+          live_peak_wind_kmh?: number | null
+          live_rainfall_mm?: number | null
+          live_river_discharge_m3s?: number | null
+          live_source?: string | null
+          live_updated_at?: string | null
+          name?: string
+          on_river_channel?: boolean
+          river_name?: string | null
+          sample_lat?: number
+          sample_lng?: number
+          slope_index?: number
+          soil_saturation?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       ingestion_runs: {
         Row: {
           error: string | null
@@ -49,13 +148,16 @@ export type Database = {
           dispatch_distance_km: number | null
           dispatch_warehouse_id: string | null
           district: string | null
+          external_id: string | null
           geocode_source: string
           hazard_type: string
           id: string
           lat: number | null
           lng: number | null
+          mode: string
           pub_date: string | null
           severity: string
+          source: string
           state: string | null
           title: string
         }
@@ -66,13 +168,16 @@ export type Database = {
           dispatch_distance_km?: number | null
           dispatch_warehouse_id?: string | null
           district?: string | null
+          external_id?: string | null
           geocode_source?: string
           hazard_type: string
           id?: string
           lat?: number | null
           lng?: number | null
+          mode?: string
           pub_date?: string | null
           severity?: string
+          source?: string
           state?: string | null
           title: string
         }
@@ -83,13 +188,16 @@ export type Database = {
           dispatch_distance_km?: number | null
           dispatch_warehouse_id?: string | null
           district?: string | null
+          external_id?: string | null
           geocode_source?: string
           hazard_type?: string
           id?: string
           lat?: number | null
           lng?: number | null
+          mode?: string
           pub_date?: string | null
           severity?: string
+          source?: string
           state?: string | null
           title?: string
         }
