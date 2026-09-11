@@ -137,13 +137,17 @@ function Dashboard() {
               ))}
             </ol>
           </div>
-        </KpiRail>
+        </aside>
 
-        <div className="relative min-w-0 flex-1">
-          <MapPanel selectedZoneId={selected} onSelectZone={setSelected} />
-          <AnimatePresence>
-            {zone && <ZoneDetailCard zone={zone} onClose={() => setSelected(null)} />}
-          </AnimatePresence>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <KpiStrip kpis={kpis} />
+          <PipelineStepper activeIndex={stage} running={running} runId={runId} />
+          <div className="relative min-h-0 flex-1">
+            <MapPanel zones={allZones} selectedZoneId={selected} onSelectZone={setSelected} />
+            <AnimatePresence>
+              {zone && <ZoneDetailCard zone={zone} onClose={() => setSelected(null)} />}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </AppShell>
