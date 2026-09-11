@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AppShell } from "@/components/AppShell";
-import { KpiRail, type Kpi } from "@/components/KpiRail";
+import { type Kpi } from "@/components/KpiRail";
+import { KpiStrip } from "@/components/KpiStrip";
 import { MapPanel } from "@/components/MapPanel";
 import { PipelineStepper } from "@/components/PipelineStepper";
 import { ZoneDetailCard } from "@/components/ZoneDetailCard";
@@ -90,9 +91,14 @@ function Dashboard() {
 
   return (
     <AppShell>
-      <PipelineStepper activeIndex={stage} running={running} runId={runId} />
-      <div className="flex h-[calc(100vh-105px)]">
-        <KpiRail kpis={kpis}>
+      <div className="flex h-[calc(100vh-49px)]">
+        <aside className="flex w-[272px] shrink-0 flex-col overflow-y-auto border-r border-line bg-panel">
+          <div className="border-b border-line px-4 py-2.5">
+            <h2 className="text-[13px] font-bold">Priority zones</h2>
+            <p className="data text-[11px] text-muted-foreground">
+              Window 06 Sep 2026 · 04:00–10:00 IST
+            </p>
+          </div>
           <div className="border-b border-line px-4 py-3">
             <button
               onClick={rerun}
@@ -104,7 +110,9 @@ function Dashboard() {
             </button>
           </div>
           <div className="px-4 py-3">
-            <div className="mb-2 text-[12px] text-muted-foreground">DDPI priority ranking</div>
+            <div className="mb-2 text-[11px] uppercase tracking-wide text-muted-foreground">
+              DDPI priority ranking
+            </div>
             <ol>
               {ranked.map((z, i) => (
                 <li key={z.id}>
@@ -130,13 +138,17 @@ function Dashboard() {
               ))}
             </ol>
           </div>
-        </KpiRail>
+        </aside>
 
-        <div className="relative min-w-0 flex-1">
-          <MapPanel selectedZoneId={selected} onSelectZone={setSelected} />
-          <AnimatePresence>
-            {zone && <ZoneDetailCard zone={zone} onClose={() => setSelected(null)} />}
-          </AnimatePresence>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <KpiStrip kpis={kpis} />
+          <PipelineStepper activeIndex={stage} running={running} runId={runId} />
+          <div className="relative min-h-0 flex-1">
+            <MapPanel zones={allZones} selectedZoneId={selected} onSelectZone={setSelected} />
+            <AnimatePresence>
+              {zone && <ZoneDetailCard zone={zone} onClose={() => setSelected(null)} />}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </AppShell>

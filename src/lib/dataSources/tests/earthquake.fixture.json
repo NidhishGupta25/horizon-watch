@@ -1,0 +1,54 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "us7000abcd",
+      "properties": {
+        "mag": 3.4,
+        "place": "62 km SE of Leh, India",
+        "time": 1757310000000,
+        "tsunami": 0,
+        "alert": null
+      },
+      "geometry": { "type": "Point", "coordinates": [77.9, 33.8, 10.2] }
+    },
+    {
+      "id": "us7000efgh",
+      "properties": {
+        "mag": 4.6,
+        "place": "Kutch region, Gujarat",
+        "time": 1757320000000,
+        "tsunami": 0,
+        "alert": "green"
+      },
+      "geometry": { "type": "Point", "coordinates": [70.1, 23.4, 18.0] }
+    },
+    {
+      "id": "us7000ijkl",
+      "properties": {
+        "mag": 6.1,
+        "place": "Nepal-India border region",
+        "time": 1757330000000,
+        "tsunami": 0,
+        "alert": "yellow"
+      },
+      "geometry": { "type": "Point", "coordinates": [84.2, 27.9, 32.5] }
+    },
+    {
+      "id": "us7000mnop",
+      "properties": {
+        "mag": 7.2,
+        "place": "Andaman Islands, India region",
+        "time": 1757340000000,
+        "tsunami": 1,
+        "alert": "orange"
+      },
+      "geometry": { "type": "Point", "coordinates": [93.1, 12.4, 45.0] }
+    },
+    {
+      "id": "us7000nomag",
+      "properties": { "mag": null, "place": "Unusable record", "time": 1757350000000 },
+      "geometry": { "type": "Point", "coordinates": [80.0, 20.0, 5.0] }
+    }
+  ]
+}
