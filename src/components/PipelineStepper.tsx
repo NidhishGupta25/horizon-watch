@@ -34,7 +34,7 @@ export function PipelineStepper({
               initial={reduced ? false : { opacity: 0.35 }}
               animate={{ opacity: done || current ? 1 : 0.35 }}
               transition={{ duration: 0.25, delay: reduced ? 0 : 0 }}
-              className="flex min-w-[104px] flex-1 items-center gap-2 border-r border-line px-2.5 py-1.5 last:border-r-0"
+              className="flex min-w-[96px] flex-1 items-center gap-1.5 border-r border-line px-2 py-1 last:border-r-0"
               style={{
                 background: current ? "var(--accent)" : "transparent",
                 borderBottom: current ? "2px solid var(--primary)" : "2px solid transparent",
